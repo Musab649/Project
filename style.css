@@ -1,0 +1,10 @@
+body { font-family: sans-serif; text-align: center; direction: rtl; background: #f0f2f5; }
+.section { display: none; padding: 20px; }
+.section.active { display: block; }
+h1.blinking { animation: blink 1s infinite; color: #2c3e50; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+button { padding: 8px 12px; margin: 5px; }
+input, select { margin: 5px; padding: 5px; width: 200px; }
+table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+th, td { border: 1px solid #ccc; padding: 8px; }
+#splashLogo { max-width: 200px; margin: 20px auto; display: block; }
