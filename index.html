@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>نظام كاشير المسالخ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- شاشة الترحيب -->
+  <div id="splash" class="section active">
+    <img id="splashLogo" src="" alt="الشعار" />
+    <h1 class="blinking">مرحباً بكم في نظام إدارة الفواتير بمسالخ الظفرة</h1>
+  </div>
+
+  <!-- شاشة تسجيل الدخول -->
+  <div id="login" class="section">
+    <h2>تسجيل الدخول</h2>
+    <label>الرقم الوظيفي:</label>
+    <input type="text" id="employeeId" />
+    <button onclick="login()">دخول</button>
+    <button onclick="closeProgram()">إغلاق</button>
+  </div>
+
+  <!-- لوحة التحكم -->
+  <div id="dashboard" class="section">
+    <h2>مرحباً <span id="username"></span></h2>
+    <button onclick="showSection('dataEntry')">📋 إدخال البيانات</button>
+    <button onclick="showSection('report')">📑 تقرير المتعاملين</button>
+    <button id="settingsBtn" onclick="showSection('settings')">⚙️ الإعدادات</button>
+    <button id="usersBtn" onclick="showSection('manageUsers')">👥 إدارة المستخدمين</button>
+    <button onclick="logout()">🚪 تسجيل خروج</button>
+  </div>
+
+  <!-- إدخال البيانات -->
+  <div id="dataEntry" class="section">
+    <img id="dataLogo" src="" alt="الشعار" class="logo" />
+    <h2 id="siteTitle"></h2>
+    <label>رقم الفاتورة:</label>
+    <input type="text" id="invoiceNumber" readonly />
+    <label>رقم التليفون:</label>
+    <input type="text" id="phone" oninput="lookupClient()" />
+    <label>اسم المتعامل:</label>
+    <input type="text" id="clientName" />
+
+    <label>نوع الذبيحة:</label>
+    <select id="animalType" onchange="updatePrice()"></select>
+
+    <label>نوع التقطيع:</label>
+    <select id="cuttingType" onchange="updatePrice()"></select>
+
+    <label>العدد:</label>
+    <select id="quantity" onchange="updatePrice()"></select>
+
+    <label>طريقة الدفع:</label>
+    <label><input type="radio" name="paymentType" value="كاش" checked /> كاش</label>
+    <label><input type="radio" name="paymentType" value="بطاقة" /> بطاقة</label>
+
+    <label>سعر الوحدة:</label>
+    <input type="number" id="unitPrice" readonly />
+    <label>الإجمالي:</label>
+    <input type="number" id="totalPrice" readonly />
+
+    <button onclick="saveData()">💾 حفظ</button>
+    <button onclick="showSection('dashboard')">🔙 رجوع</button>
+  </div>
+
+  <!-- تقرير المتعاملين -->
+  <div id="report" class="section">
+    <img id="reportLogo" src="" alt="الشعار" class="logo" />
+    <h2>تقرير المتعاملين</h2>
+    <label>الموقع:</label>
+    <select id="filterSite"></select>
+    <label>من:</label>
+    <input type="date" id="fromDate" />
+    <label>إلى:</label>
+    <input type="date" id="toDate" />
+    <button onclick="filterReport()">تصفية</button>
+
+    <table id="reportTable">
+      <thead>
+        <tr>
+          <th>الموقع</th><th>العميل</th><th>هاتف</th><th>الفاتورة</th><th>ذبيحة</th><th>تقطيع</th><th>عدد</th><th>دفع</th><th>سعر</th><th>الإجمالي</th><th>تاريخ</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="showSection('dashboard')">🔙 رجوع</button>
+  </div>
+
+  <!-- الإعدادات -->
+  <div id="settings" class="section">
+    <h2>⚙️ الإعدادات</h2>
+    <label>رفع شعار:</label>
+    <input type="file" id="logoUpload" onchange="uploadLogo()" />
+    <h3>المواقع</h3>
+    <input type="text" id="newSite" placeholder="اسم الموقع" />
+    <button onclick="addSite()">➕ إضافة موقع</button>
+    <ul id="sitesList"></ul>
+    <h3>أنواع الذبيحة</h3>
+    <input type="text" id="newAnimal" placeholder="نوع ذبيحة" />
+    <button onclick="addAnimal()">➕ إضافة</button>
+    <ul id="animalsList"></ul>
+    <h3>التقطيع</h3>
+    <input type="text" id="newCutting" placeholder="نوع تقطيع" />
+    <button onclick="addCutting()">➕ إضافة</button>
+    <ul id="cuttingsList"></ul>
+    <h3>تسعير</h3>
+    <select id="priceAnimal"></select>
+    <select id="priceCutting"></select>
+    <input type="number" id="priceValue" placeholder="السعر" />
+    <button onclick="setPrice()">💰 تعيين سعر</button>
+    <button onclick="showSection('dashboard')">🔙 رجوع</button>
+  </div>
+
+  <!-- إدارة المستخدمين -->
+  <div id="manageUsers" class="section">
+    <h2>👥 إدارة المستخدمين</h2>
+    <input type="text" id="newUserId" placeholder="رقم وظيفي" />
+    <input type="text" id="newUserName" placeholder="الاسم" />
+    <select id="newUserSite"></select>
+    <button onclick="addUser()">➕ إضافة مستخدم</button>
+    <table id="usersTable"></table>
+    <button onclick="showSection('dashboard')">🔙 رجوع</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
