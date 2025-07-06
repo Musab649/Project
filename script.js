@@ -43,7 +43,33 @@ function addUser() {
   save();
   renderUsers();
 }
+function login() {
+  const empId = document.getElementById("employeeId").value.trim();
+  if (!empId) {
+    alert("الرجاء إدخال الرقم الوظيفي");
+    return;
+  }
+  const user = users.find(u => u.id === empId);
+  if (!user) {
+    alert("المستخدم غير موجود");
+    return;
+  }
+  currentUser = user;
+  document.getElementById("username").textContent = currentUser.name;
+  setupDataEntrySite();
 
+  // 🔒 اخفاء الازرار غير المسموحة حسب الدور
+  if (currentUser.role === "admin") {
+    document.getElementById("settingsBtn").style.display = "inline-block";
+    document.getElementById("manageUsersBtn").style.display = "inline-block";
+  } else {
+    document.getElementById("settingsBtn").style.display = "none";
+    document.getElementById("manageUsersBtn").style.display = "none";
+  }
+
+  showSection("dashboard");
+  clearDataEntryForm();
+}
 function renderUsers() {
   let t = document.getElementById('usersTable'); t.innerHTML = '';
   users.forEach(u => {
