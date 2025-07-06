@@ -58,13 +58,6 @@ function login() {
   document.getElementById("username").textContent = currentUser.name;
   setupDataEntrySite();
 
-  // 🔒 اخفاء الازرار غير المسموحة حسب الدور
-  if (currentUser.role === "admin") {
-    document.getElementById("settingsBtn").style.display = "inline-block";
-    document.getElementById("manageUsersBtn").style.display = "inline-block";
-  } else {
-    document.getElementById("settingsBtn").style.display = "none";
-    document.getElementById("manageUsersBtn").style.display = "none";
   }
 
   showSection("dashboard");
@@ -148,4 +141,12 @@ function save() {
   localStorage.setItem('cuttings', JSON.stringify(cuttings));
   localStorage.setItem('prices', JSON.stringify(prices));
   localStorage.setItem('invoices', JSON.stringify(invoices));
+  
+  // 🔒 اخفاء الازرار غير المسموحة حسب الدور
+  if (currentUser.role === "admin") {
+    document.getElementById("settingsBtn").style.display = "inline-block";
+    document.getElementById("manageUsersBtn").style.display = "inline-block";
+  } else {
+    document.getElementById("settingsBtn").style.display = "none";
+    document.getElementById("manageUsersBtn").style.display = "none";
 }
